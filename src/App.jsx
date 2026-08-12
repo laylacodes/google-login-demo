@@ -50,23 +50,7 @@ function App() {
       )}
       <p>Name: {user.name}</p>
       <p>Email: {user.email}</p>
-
-      {favoriteFramework ? (
-        <p>Favorite framework: {favoriteFramework}</p>
-      ) : (
-        <button
-          onClick={() =>
-            loginWithRedirect({
-              authorizationParams: {
-                connection: "google-oauth2",
-                prompt: "login",
-              },
-            })
-          }
-        >
-          Fill out profile
-        </button>
-      )}
+      {favoriteFramework && <p>Favorite framework: {favoriteFramework}</p>}
 
       <button
         onClick={() =>
