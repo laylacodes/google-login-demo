@@ -1,5 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 
+const NAMESPACE = "https://your-app.example.com";
+
 function App() {
   const {
     isLoading,
@@ -23,7 +25,6 @@ function App() {
       <main>
         <h1>Howdy! 👋</h1>
         <p>You are not signed in.</p>
-
         <button
           onClick={() =>
             loginWithRedirect({
@@ -39,21 +40,33 @@ function App() {
     );
   }
 
+  const favoriteFramework = user[`${NAMESPACE}/favorite_framework`];
+
   return (
     <main>
-      <h1>You’re signed in!</h1>
-
+      <h1>You're signed in!</h1>
       {user.picture && (
-        <img
-          src={user.picture}
-          alt={user.name}
-          width="80"
-          height="80"
-        />
+        <img src={user.picture} alt={user.name} width="80" height="80" />
       )}
-
       <p>Name: {user.name}</p>
       <p>Email: {user.email}</p>
+
+      {favoriteFramework ? (
+        <p>Favorite framework: {favoriteFramework}</p>
+      ) : (
+        <button
+          onClick={() =>
+            loginWithRedirect({
+              authorizationParams: {
+                connection: "google-oauth2",
+                prompt: "login",
+              },
+            })
+          }
+        >
+          Fill out profile
+        </button>
+      )}
 
       <button
         onClick={() =>
